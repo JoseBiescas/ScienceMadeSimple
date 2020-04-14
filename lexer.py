@@ -21,7 +21,7 @@ class Lexer(object):
         'ID',
 
         #Operators (Can't be decalred in literals)
-        'LTOE', 'GTOE',
+        'LTOE', 'GTOE', 'NOTEQ',
 
         #Digits
         'INT', 'FLOAT',
@@ -33,6 +33,7 @@ class Lexer(object):
     #RULES
     t_LTOE = r'<='
     t_GTOE = r'>='
+    t_NOTEQ = r'!='
     t_ignore = ' \t'
 
     def t_newline(self, t):
@@ -55,7 +56,7 @@ class Lexer(object):
         t.value = False
         return t
 
-    def t_FLOAT(self, t):
+    def t_FLOAT(self, t): #Looks like placing Float rule over Int rule gives it a higher precedence
         r'[+-]?([0-9]*[.])?[0-9]+'
         t.value = float(t.value)
         return t

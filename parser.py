@@ -7,7 +7,6 @@ class Parser():
     m.build()
     tokens = m.tokens
 
-
     def p_TERM(self,p):
         '''
         TERM : NUMBER
@@ -32,16 +31,16 @@ class Parser():
         '''
         BINOP : '+'
               | '-'
-              |'*'
-              |'/'
-              |'='
-              |'!''='
-              |'<'
-              |'>'
-              |'<''='
-              |'>''='
-              |'&'
-              |'|'
+              | '*'
+              | '/'
+              | '='
+              | NOTEQ
+              | '<'
+              | '>'
+              | LTOE
+              | GTOE
+              | '&'
+              | '|'
               '''
 
     def p_BOOLEAN(self,p):
@@ -71,11 +70,14 @@ class Parser():
         INTEGER : INT
         '''
     
+    def p_error(self, p):
+        print("Syntax error in input!")
+    
     def build(self, **kwargs):
         self.parser = yacc.yacc(module=self,**kwargs)
         print("Built succesfully")
     
-    def test(self):
+    def test_doc(self):
         while True:
             try:
                 f = open("Test", "r")
@@ -83,7 +85,6 @@ class Parser():
             except EOFError:
                 break
             if not f:
-            
                 continue
             for w in f:
                 doc += w
@@ -92,6 +93,19 @@ class Parser():
             self.parser.parse(doc)
             print("Parse finished.")
             break
+
+    def test_str(self):
+        while True:
+            try:
+                s = input("parse > ")
+            except EOFError:
+                break
+            if not s:
+                continue
+            self.parser.parse(s, debug=True)
+            print("Parse finished.")
+
 p = Parser()
 p.build()
-#p.test() <- uncomment for testing
+#p.test_str() Uncomment for quick testing 
+#p.test_doc() <- uncomment for testing
