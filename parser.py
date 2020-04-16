@@ -15,6 +15,7 @@ class Parser():
              | IDENTIFIER
              | empty
              | BOOLEAN
+             | sciences
              '''
 
     def p_IDList(self,p):
@@ -68,6 +69,63 @@ class Parser():
     def p_INTEGER(self,p):
         '''
         INTEGER : INT
+        '''
+
+    # EPERCENT PARAMETERS: approximate value, exact value
+    # FORMULA = (|aprox - exact|/exact) * 100
+
+    def p_SCIENCES(self, p):
+        '''
+        sciences : physics
+                 | chemistry
+                 | EPERCENT '(' NUMBER ',' NUMBER ')'
+        '''
+
+    #PHYSICS:
+    # POSITION PARAMETERS: acceleration, time, initial velocity and initial position
+    # FORMULA = 0.5 * a * t^2 + v0*t + initial position
+
+    # INITIAL VELOCITY PARAMETERS: final velocity, acceleration, displacement
+    # FORMULA: sqrt(vF^2 - 2*a*displacement) 
+
+    # FINAL VELOCITY:  initial velocity, acceleration, (displacement or time), boolean
+    # FORMULA 1: sqrt(v0^2 + 2*a*displacement), if boolean is true
+    # FORMULA 2: v0 + a*t, if boolean is false
+
+    # AVERAGE VELOCITY PARAMETERS: initial position, final position, time
+    # FORMULA = (xF - x0)/t
+
+    # VELOCITY IN X PARAMETERS: the overall velocity
+    # FORMULA: v*cos(theta)
+
+    # VELOCITY IN Y PARAMETERS: the overall velocity
+    # FORMULA: v*sin(theta)
+
+    # ACCELERATION PARAMETERS: initial velocity, final velocity, time 
+    # FORMULA: (vF - v0)/t
+    
+    # POTENTIAL ENERGY PARAMETERS: mass, vertical height
+    # FORMULA: m * G * h
+
+    # KINETIC ENERGY PARAMETERS: mass, velocity
+    # FORMULA: 0.5 * m * v^2
+    # # 
+    def p_PHYSICS(self, p):
+        '''
+        physics : POSITION '(' NUMBER ',' NUMBER ',' NUMBER ',' NUMBER ')'
+                | INITIAL VELOCITY '(' NUMBER ',' NUMBER ',' NUMBER ')'
+                | FINAL VELOCITY '(' NUMBER ',' NUMBER ',' NUMBER ',' BOOLEAN ')'
+                | AVERAGE VELOCITY '(' NUMBER ',' NUMBER ',' NUMBER ')'
+                | VELOCITY IN X '(' NUMBER ')'
+                | VELOCITY IN Y '(' NUMBER ')'
+                | ACCELERATION '(' NUMBER ',' NUMBER ',' NUMBER ')'
+                | POTENTIAL ENERGY '(' NUMBER ',' NUMBER ')'
+                | KINETIC ENERGY '(' NUMBER ',' NUMBER ')'
+        '''
+
+    def p_CHEMISTRY(self, p):
+        '''
+        chemistry : 
         '''
     
     def p_error(self, p):

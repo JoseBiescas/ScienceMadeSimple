@@ -9,6 +9,26 @@ class Lexer(object):
         'while' : 'WHILE',
         'stop' : 'STOP',
         'next' : 'NEXT',
+        'in' : 'IN',
+
+        'position' : 'POSITION', 
+        'kinetic' : 'KINETIC', 
+        'potential' : 'POTENTIAL', 
+        'energy' : 'ENERGY', 
+        'velocity' : 'VELOCITY', 
+        'acceleration' : 'ACCELERATION', 
+        'impulse' : 'IMPULSE', 
+        'epercent' : 'EPERCENT', 
+        'gravity' : 'GRAVITY', 
+        'planck' : 'PLANCK', 
+        'pi' : 'PI',
+        'initial' : 'INITIAL',
+        'final' : 'FINAL',
+        'average' : 'AVERAGE',
+        'time' : 'TIME',
+        'force' : 'FORCE',
+        'x' : 'X',
+        'y' : 'Y'
     }
     literals = [
         '+', '-', '/', '*', '^', '(', ')', '[',

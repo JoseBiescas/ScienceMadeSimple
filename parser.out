@@ -1,0 +1,1070 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AT
+    FOR
+    FORCE
+    GRAVITY
+    IMPULSE
+    NEXT
+    PI
+    PLANCK
+    STOP
+    TIME
+    WHILE
+
+Grammar
+
+Rule 0     S' -> TERM
+Rule 1     TERM -> NUMBER
+Rule 2     TERM -> + NUMBER
+Rule 3     TERM -> - NUMBER
+Rule 4     TERM -> IDENTIFIER
+Rule 5     TERM -> empty
+Rule 6     TERM -> BOOLEAN
+Rule 7     TERM -> sciences
+Rule 8     IDList -> IDENTIFIER
+Rule 9     IDList -> IDENTIFIER , IDList
+Rule 10    empty -> <empty>
+Rule 11    BINOP -> +
+Rule 12    BINOP -> -
+Rule 13    BINOP -> *
+Rule 14    BINOP -> /
+Rule 15    BINOP -> =
+Rule 16    BINOP -> NOTEQ
+Rule 17    BINOP -> <
+Rule 18    BINOP -> >
+Rule 19    BINOP -> LTOE
+Rule 20    BINOP -> GTOE
+Rule 21    BINOP -> &
+Rule 22    BINOP -> |
+Rule 23    BOOLEAN -> TRUE
+Rule 24    BOOLEAN -> FALSE
+Rule 25    IDENTIFIER -> ID
+Rule 26    NUMBER -> INTEGER
+Rule 27    NUMBER -> FLOATN
+Rule 28    FLOATN -> FLOAT
+Rule 29    INTEGER -> INT
+Rule 30    sciences -> physics
+Rule 31    sciences -> EPERCENT ( NUMBER , NUMBER )
+Rule 32    physics -> POSITION ( NUMBER , NUMBER , NUMBER , NUMBER )
+Rule 33    physics -> INITIAL VELOCITY ( NUMBER , NUMBER , NUMBER )
+Rule 34    physics -> FINAL VELOCITY ( NUMBER , NUMBER , NUMBER , BOOLEAN )
+Rule 35    physics -> AVERAGE VELOCITY ( NUMBER , NUMBER , NUMBER )
+Rule 36    physics -> VELOCITY IN X ( NUMBER )
+Rule 37    physics -> VELOCITY IN Y ( NUMBER )
+Rule 38    physics -> ACCELERATION ( NUMBER , NUMBER , NUMBER )
+Rule 39    physics -> POTENTIAL ENERGY ( NUMBER , NUMBER )
+Rule 40    physics -> KINETIC ENERGY ( NUMBER , NUMBER )
+
+Terminals, with rules where they appear
+
+&                    : 21
+(                    : 31 32 33 34 35 36 37 38 39 40
+)                    : 31 32 33 34 35 36 37 38 39 40
+*                    : 13
++                    : 2 11
+,                    : 9 31 32 32 32 33 33 34 34 34 35 35 38 38 39 40
+-                    : 3 12
+/                    : 14
+<                    : 17
+=                    : 15
+>                    : 18
+ACCELERATION         : 38
+AT                   : 
+AVERAGE              : 35
+ENERGY               : 39 40
+EPERCENT             : 31
+FALSE                : 24
+FINAL                : 34
+FLOAT                : 28
+FOR                  : 
+FORCE                : 
+GRAVITY              : 
+GTOE                 : 20
+ID                   : 25
+IMPULSE              : 
+IN                   : 36 37
+INITIAL              : 33
+INT                  : 29
+KINETIC              : 40
+LTOE                 : 19
+NEXT                 : 
+NOTEQ                : 16
+PI                   : 
+PLANCK               : 
+POSITION             : 32
+POTENTIAL            : 39
+STOP                 : 
+TIME                 : 
+TRUE                 : 23
+VELOCITY             : 33 34 35 36 37
+WHILE                : 
+X                    : 36
+Y                    : 37
+error                : 
+|                    : 22
+
+Nonterminals, with rules where they appear
+
+BINOP                : 
+BOOLEAN              : 6 34
+FLOATN               : 27
+IDENTIFIER           : 4 8 9
+IDList               : 9
+INTEGER              : 26
+NUMBER               : 1 2 3 31 31 32 32 32 32 33 33 33 34 34 34 35 35 35 36 37 38 38 38 39 39 40 40
+TERM                 : 0
+empty                : 5
+physics              : 30
+sciences             : 7
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . TERM
+    (1) TERM -> . NUMBER
+    (2) TERM -> . + NUMBER
+    (3) TERM -> . - NUMBER
+    (4) TERM -> . IDENTIFIER
+    (5) TERM -> . empty
+    (6) TERM -> . BOOLEAN
+    (7) TERM -> . sciences
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (25) IDENTIFIER -> . ID
+    (10) empty -> .
+    (23) BOOLEAN -> . TRUE
+    (24) BOOLEAN -> . FALSE
+    (30) sciences -> . physics
+    (31) sciences -> . EPERCENT ( NUMBER , NUMBER )
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+    (32) physics -> . POSITION ( NUMBER , NUMBER , NUMBER , NUMBER )
+    (33) physics -> . INITIAL VELOCITY ( NUMBER , NUMBER , NUMBER )
+    (34) physics -> . FINAL VELOCITY ( NUMBER , NUMBER , NUMBER , BOOLEAN )
+    (35) physics -> . AVERAGE VELOCITY ( NUMBER , NUMBER , NUMBER )
+    (36) physics -> . VELOCITY IN X ( NUMBER )
+    (37) physics -> . VELOCITY IN Y ( NUMBER )
+    (38) physics -> . ACCELERATION ( NUMBER , NUMBER , NUMBER )
+    (39) physics -> . POTENTIAL ENERGY ( NUMBER , NUMBER )
+    (40) physics -> . KINETIC ENERGY ( NUMBER , NUMBER )
+
+    +               shift and go to state 3
+    -               shift and go to state 4
+    ID              shift and go to state 11
+    $end            reduce using rule 10 (empty -> .)
+    TRUE            shift and go to state 12
+    FALSE           shift and go to state 13
+    EPERCENT        shift and go to state 15
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+    POSITION        shift and go to state 18
+    INITIAL         shift and go to state 19
+    FINAL           shift and go to state 21
+    AVERAGE         shift and go to state 22
+    VELOCITY        shift and go to state 20
+    ACCELERATION    shift and go to state 23
+    POTENTIAL       shift and go to state 24
+    KINETIC         shift and go to state 25
+
+    TERM                           shift and go to state 1
+    NUMBER                         shift and go to state 2
+    IDENTIFIER                     shift and go to state 5
+    empty                          shift and go to state 6
+    BOOLEAN                        shift and go to state 7
+    sciences                       shift and go to state 8
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+    physics                        shift and go to state 14
+
+state 1
+
+    (0) S' -> TERM .
+
+
+
+state 2
+
+    (1) TERM -> NUMBER .
+
+    $end            reduce using rule 1 (TERM -> NUMBER .)
+
+
+state 3
+
+    (2) TERM -> + . NUMBER
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 26
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 4
+
+    (3) TERM -> - . NUMBER
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 27
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 5
+
+    (4) TERM -> IDENTIFIER .
+
+    $end            reduce using rule 4 (TERM -> IDENTIFIER .)
+
+
+state 6
+
+    (5) TERM -> empty .
+
+    $end            reduce using rule 5 (TERM -> empty .)
+
+
+state 7
+
+    (6) TERM -> BOOLEAN .
+
+    $end            reduce using rule 6 (TERM -> BOOLEAN .)
+
+
+state 8
+
+    (7) TERM -> sciences .
+
+    $end            reduce using rule 7 (TERM -> sciences .)
+
+
+state 9
+
+    (26) NUMBER -> INTEGER .
+
+    $end            reduce using rule 26 (NUMBER -> INTEGER .)
+    ,               reduce using rule 26 (NUMBER -> INTEGER .)
+    )               reduce using rule 26 (NUMBER -> INTEGER .)
+
+
+state 10
+
+    (27) NUMBER -> FLOATN .
+
+    $end            reduce using rule 27 (NUMBER -> FLOATN .)
+    ,               reduce using rule 27 (NUMBER -> FLOATN .)
+    )               reduce using rule 27 (NUMBER -> FLOATN .)
+
+
+state 11
+
+    (25) IDENTIFIER -> ID .
+
+    $end            reduce using rule 25 (IDENTIFIER -> ID .)
+
+
+state 12
+
+    (23) BOOLEAN -> TRUE .
+
+    $end            reduce using rule 23 (BOOLEAN -> TRUE .)
+    )               reduce using rule 23 (BOOLEAN -> TRUE .)
+
+
+state 13
+
+    (24) BOOLEAN -> FALSE .
+
+    $end            reduce using rule 24 (BOOLEAN -> FALSE .)
+    )               reduce using rule 24 (BOOLEAN -> FALSE .)
+
+
+state 14
+
+    (30) sciences -> physics .
+
+    $end            reduce using rule 30 (sciences -> physics .)
+
+
+state 15
+
+    (31) sciences -> EPERCENT . ( NUMBER , NUMBER )
+
+    (               shift and go to state 28
+
+
+state 16
+
+    (29) INTEGER -> INT .
+
+    $end            reduce using rule 29 (INTEGER -> INT .)
+    ,               reduce using rule 29 (INTEGER -> INT .)
+    )               reduce using rule 29 (INTEGER -> INT .)
+
+
+state 17
+
+    (28) FLOATN -> FLOAT .
+
+    $end            reduce using rule 28 (FLOATN -> FLOAT .)
+    ,               reduce using rule 28 (FLOATN -> FLOAT .)
+    )               reduce using rule 28 (FLOATN -> FLOAT .)
+
+
+state 18
+
+    (32) physics -> POSITION . ( NUMBER , NUMBER , NUMBER , NUMBER )
+
+    (               shift and go to state 29
+
+
+state 19
+
+    (33) physics -> INITIAL . VELOCITY ( NUMBER , NUMBER , NUMBER )
+
+    VELOCITY        shift and go to state 30
+
+
+state 20
+
+    (36) physics -> VELOCITY . IN X ( NUMBER )
+    (37) physics -> VELOCITY . IN Y ( NUMBER )
+
+    IN              shift and go to state 31
+
+
+state 21
+
+    (34) physics -> FINAL . VELOCITY ( NUMBER , NUMBER , NUMBER , BOOLEAN )
+
+    VELOCITY        shift and go to state 32
+
+
+state 22
+
+    (35) physics -> AVERAGE . VELOCITY ( NUMBER , NUMBER , NUMBER )
+
+    VELOCITY        shift and go to state 33
+
+
+state 23
+
+    (38) physics -> ACCELERATION . ( NUMBER , NUMBER , NUMBER )
+
+    (               shift and go to state 34
+
+
+state 24
+
+    (39) physics -> POTENTIAL . ENERGY ( NUMBER , NUMBER )
+
+    ENERGY          shift and go to state 35
+
+
+state 25
+
+    (40) physics -> KINETIC . ENERGY ( NUMBER , NUMBER )
+
+    ENERGY          shift and go to state 36
+
+
+state 26
+
+    (2) TERM -> + NUMBER .
+
+    $end            reduce using rule 2 (TERM -> + NUMBER .)
+
+
+state 27
+
+    (3) TERM -> - NUMBER .
+
+    $end            reduce using rule 3 (TERM -> - NUMBER .)
+
+
+state 28
+
+    (31) sciences -> EPERCENT ( . NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 37
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 29
+
+    (32) physics -> POSITION ( . NUMBER , NUMBER , NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 38
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 30
+
+    (33) physics -> INITIAL VELOCITY . ( NUMBER , NUMBER , NUMBER )
+
+    (               shift and go to state 39
+
+
+state 31
+
+    (36) physics -> VELOCITY IN . X ( NUMBER )
+    (37) physics -> VELOCITY IN . Y ( NUMBER )
+
+    X               shift and go to state 40
+    Y               shift and go to state 41
+
+
+state 32
+
+    (34) physics -> FINAL VELOCITY . ( NUMBER , NUMBER , NUMBER , BOOLEAN )
+
+    (               shift and go to state 42
+
+
+state 33
+
+    (35) physics -> AVERAGE VELOCITY . ( NUMBER , NUMBER , NUMBER )
+
+    (               shift and go to state 43
+
+
+state 34
+
+    (38) physics -> ACCELERATION ( . NUMBER , NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 44
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 35
+
+    (39) physics -> POTENTIAL ENERGY . ( NUMBER , NUMBER )
+
+    (               shift and go to state 45
+
+
+state 36
+
+    (40) physics -> KINETIC ENERGY . ( NUMBER , NUMBER )
+
+    (               shift and go to state 46
+
+
+state 37
+
+    (31) sciences -> EPERCENT ( NUMBER . , NUMBER )
+
+    ,               shift and go to state 47
+
+
+state 38
+
+    (32) physics -> POSITION ( NUMBER . , NUMBER , NUMBER , NUMBER )
+
+    ,               shift and go to state 48
+
+
+state 39
+
+    (33) physics -> INITIAL VELOCITY ( . NUMBER , NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 49
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 40
+
+    (36) physics -> VELOCITY IN X . ( NUMBER )
+
+    (               shift and go to state 50
+
+
+state 41
+
+    (37) physics -> VELOCITY IN Y . ( NUMBER )
+
+    (               shift and go to state 51
+
+
+state 42
+
+    (34) physics -> FINAL VELOCITY ( . NUMBER , NUMBER , NUMBER , BOOLEAN )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 52
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 43
+
+    (35) physics -> AVERAGE VELOCITY ( . NUMBER , NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 53
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 44
+
+    (38) physics -> ACCELERATION ( NUMBER . , NUMBER , NUMBER )
+
+    ,               shift and go to state 54
+
+
+state 45
+
+    (39) physics -> POTENTIAL ENERGY ( . NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 55
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 46
+
+    (40) physics -> KINETIC ENERGY ( . NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 56
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 47
+
+    (31) sciences -> EPERCENT ( NUMBER , . NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 57
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 48
+
+    (32) physics -> POSITION ( NUMBER , . NUMBER , NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 58
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 49
+
+    (33) physics -> INITIAL VELOCITY ( NUMBER . , NUMBER , NUMBER )
+
+    ,               shift and go to state 59
+
+
+state 50
+
+    (36) physics -> VELOCITY IN X ( . NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 60
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 51
+
+    (37) physics -> VELOCITY IN Y ( . NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 61
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 52
+
+    (34) physics -> FINAL VELOCITY ( NUMBER . , NUMBER , NUMBER , BOOLEAN )
+
+    ,               shift and go to state 62
+
+
+state 53
+
+    (35) physics -> AVERAGE VELOCITY ( NUMBER . , NUMBER , NUMBER )
+
+    ,               shift and go to state 63
+
+
+state 54
+
+    (38) physics -> ACCELERATION ( NUMBER , . NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 64
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 55
+
+    (39) physics -> POTENTIAL ENERGY ( NUMBER . , NUMBER )
+
+    ,               shift and go to state 65
+
+
+state 56
+
+    (40) physics -> KINETIC ENERGY ( NUMBER . , NUMBER )
+
+    ,               shift and go to state 66
+
+
+state 57
+
+    (31) sciences -> EPERCENT ( NUMBER , NUMBER . )
+
+    )               shift and go to state 67
+
+
+state 58
+
+    (32) physics -> POSITION ( NUMBER , NUMBER . , NUMBER , NUMBER )
+
+    ,               shift and go to state 68
+
+
+state 59
+
+    (33) physics -> INITIAL VELOCITY ( NUMBER , . NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 69
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 60
+
+    (36) physics -> VELOCITY IN X ( NUMBER . )
+
+    )               shift and go to state 70
+
+
+state 61
+
+    (37) physics -> VELOCITY IN Y ( NUMBER . )
+
+    )               shift and go to state 71
+
+
+state 62
+
+    (34) physics -> FINAL VELOCITY ( NUMBER , . NUMBER , NUMBER , BOOLEAN )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 72
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 63
+
+    (35) physics -> AVERAGE VELOCITY ( NUMBER , . NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 73
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 64
+
+    (38) physics -> ACCELERATION ( NUMBER , NUMBER . , NUMBER )
+
+    ,               shift and go to state 74
+
+
+state 65
+
+    (39) physics -> POTENTIAL ENERGY ( NUMBER , . NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 75
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 66
+
+    (40) physics -> KINETIC ENERGY ( NUMBER , . NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 76
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 67
+
+    (31) sciences -> EPERCENT ( NUMBER , NUMBER ) .
+
+    $end            reduce using rule 31 (sciences -> EPERCENT ( NUMBER , NUMBER ) .)
+
+
+state 68
+
+    (32) physics -> POSITION ( NUMBER , NUMBER , . NUMBER , NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 77
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 69
+
+    (33) physics -> INITIAL VELOCITY ( NUMBER , NUMBER . , NUMBER )
+
+    ,               shift and go to state 78
+
+
+state 70
+
+    (36) physics -> VELOCITY IN X ( NUMBER ) .
+
+    $end            reduce using rule 36 (physics -> VELOCITY IN X ( NUMBER ) .)
+
+
+state 71
+
+    (37) physics -> VELOCITY IN Y ( NUMBER ) .
+
+    $end            reduce using rule 37 (physics -> VELOCITY IN Y ( NUMBER ) .)
+
+
+state 72
+
+    (34) physics -> FINAL VELOCITY ( NUMBER , NUMBER . , NUMBER , BOOLEAN )
+
+    ,               shift and go to state 79
+
+
+state 73
+
+    (35) physics -> AVERAGE VELOCITY ( NUMBER , NUMBER . , NUMBER )
+
+    ,               shift and go to state 80
+
+
+state 74
+
+    (38) physics -> ACCELERATION ( NUMBER , NUMBER , . NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 81
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 75
+
+    (39) physics -> POTENTIAL ENERGY ( NUMBER , NUMBER . )
+
+    )               shift and go to state 82
+
+
+state 76
+
+    (40) physics -> KINETIC ENERGY ( NUMBER , NUMBER . )
+
+    )               shift and go to state 83
+
+
+state 77
+
+    (32) physics -> POSITION ( NUMBER , NUMBER , NUMBER . , NUMBER )
+
+    ,               shift and go to state 84
+
+
+state 78
+
+    (33) physics -> INITIAL VELOCITY ( NUMBER , NUMBER , . NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 85
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 79
+
+    (34) physics -> FINAL VELOCITY ( NUMBER , NUMBER , . NUMBER , BOOLEAN )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 86
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 80
+
+    (35) physics -> AVERAGE VELOCITY ( NUMBER , NUMBER , . NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 87
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 81
+
+    (38) physics -> ACCELERATION ( NUMBER , NUMBER , NUMBER . )
+
+    )               shift and go to state 88
+
+
+state 82
+
+    (39) physics -> POTENTIAL ENERGY ( NUMBER , NUMBER ) .
+
+    $end            reduce using rule 39 (physics -> POTENTIAL ENERGY ( NUMBER , NUMBER ) .)
+
+
+state 83
+
+    (40) physics -> KINETIC ENERGY ( NUMBER , NUMBER ) .
+
+    $end            reduce using rule 40 (physics -> KINETIC ENERGY ( NUMBER , NUMBER ) .)
+
+
+state 84
+
+    (32) physics -> POSITION ( NUMBER , NUMBER , NUMBER , . NUMBER )
+    (26) NUMBER -> . INTEGER
+    (27) NUMBER -> . FLOATN
+    (29) INTEGER -> . INT
+    (28) FLOATN -> . FLOAT
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+
+    NUMBER                         shift and go to state 89
+    INTEGER                        shift and go to state 9
+    FLOATN                         shift and go to state 10
+
+state 85
+
+    (33) physics -> INITIAL VELOCITY ( NUMBER , NUMBER , NUMBER . )
+
+    )               shift and go to state 90
+
+
+state 86
+
+    (34) physics -> FINAL VELOCITY ( NUMBER , NUMBER , NUMBER . , BOOLEAN )
+
+    ,               shift and go to state 91
+
+
+state 87
+
+    (35) physics -> AVERAGE VELOCITY ( NUMBER , NUMBER , NUMBER . )
+
+    )               shift and go to state 92
+
+
+state 88
+
+    (38) physics -> ACCELERATION ( NUMBER , NUMBER , NUMBER ) .
+
+    $end            reduce using rule 38 (physics -> ACCELERATION ( NUMBER , NUMBER , NUMBER ) .)
+
+
+state 89
+
+    (32) physics -> POSITION ( NUMBER , NUMBER , NUMBER , NUMBER . )
+
+    )               shift and go to state 93
+
+
+state 90
+
+    (33) physics -> INITIAL VELOCITY ( NUMBER , NUMBER , NUMBER ) .
+
+    $end            reduce using rule 33 (physics -> INITIAL VELOCITY ( NUMBER , NUMBER , NUMBER ) .)
+
+
+state 91
+
+    (34) physics -> FINAL VELOCITY ( NUMBER , NUMBER , NUMBER , . BOOLEAN )
+    (23) BOOLEAN -> . TRUE
+    (24) BOOLEAN -> . FALSE
+
+    TRUE            shift and go to state 12
+    FALSE           shift and go to state 13
+
+    BOOLEAN                        shift and go to state 94
+
+state 92
+
+    (35) physics -> AVERAGE VELOCITY ( NUMBER , NUMBER , NUMBER ) .
+
+    $end            reduce using rule 35 (physics -> AVERAGE VELOCITY ( NUMBER , NUMBER , NUMBER ) .)
+
+
+state 93
+
+    (32) physics -> POSITION ( NUMBER , NUMBER , NUMBER , NUMBER ) .
+
+    $end            reduce using rule 32 (physics -> POSITION ( NUMBER , NUMBER , NUMBER , NUMBER ) .)
+
+
+state 94
+
+    (34) physics -> FINAL VELOCITY ( NUMBER , NUMBER , NUMBER , BOOLEAN . )
+
+    )               shift and go to state 95
+
+
+state 95
+
+    (34) physics -> FINAL VELOCITY ( NUMBER , NUMBER , NUMBER , BOOLEAN ) .
+
+    $end            reduce using rule 34 (physics -> FINAL VELOCITY ( NUMBER , NUMBER , NUMBER , BOOLEAN ) .)
+
