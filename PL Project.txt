@@ -1,0 +1,83 @@
+﻿Gramatica for Basic MATLAB for Sciences (Physics and Chemistry)
+
+
+Tokens:
+1. Characters = [a-zA-Z]+
+2. Digits = [0-9]+
+3. Literals = [+-/*^()[]{}=<>|&?]
+4. Reserved: 
+   1. Classic words: {for, at, while, true, false, stop, next, int}
+   2. Special words: {position, kinetic, potential, energy, velocity, acceleration, work, impulse, epercent, gravity, planck, pi, x, y}
+5. ID = [a-zA-Z][a-zA-Z0-9]+
+
+
+\[(\d+\.?\d*),(\d+\.?\d*)\]
+Grammar:
+1. expression := 
+   1. expression, expression ‘?’ expression
+   2. ‘(‘ expression ‘)’
+   3. expression “+|-|/|*|^|=|<|>’ expression
+   4. ID ‘=’ expression
+   5. FOR IDList AT List
+   6. term
+2. term :=
+   1. Number
+   2. +|- Number
+   3. ID
+   4. empty
+   5. bool
+   6. sciences
+3. Number :=
+   1. Int
+   2. Decimal
+4. IDList :=
+   1. ID
+   2. ID ‘,’ IDList
+5. bool :=
+   1. TRUE
+   2. FALSE
+6. List :=
+   1. [ explist ]
+   2. [ listlist ]
+7. listlist :=
+   1. [ explist ]
+   2. [ listlist ]
+   3. [ explist ] , [ listlist ]
+8. explist :=
+   1. expression
+   2. expression ‘,’ explist’
+
+
+9. Int :=
+   1. Digits
+10. Decimal := 
+   1. Int ‘.’ Int
+11. sciences :=
+   1. physics
+   2. chemistry
+   3. MVD (mass/vol/density)
+   4. EPERCENT
+12. physics := 
+   1. POSITION
+   2. velocity
+   3. ACCELERATION
+   4. WORK
+   5. IMPULSE
+   6. energy
+13. chemistry :=
+   1. COMPOSITION
+   2. MOLARITY
+   3. BROGLIE
+   4. EOWAVE
+   5. COULOMB
+   6. CGAS
+   7. BOILING
+   8. FREEZING
+14. energy := 
+   1. POTENTIAL_ENERGY
+   2. KINETIC_ENERGY
+15. velocity :=
+   1. AVERAGE_VELOCITY
+   2. INSTANTANEOUS_VELOCITY
+   3. VELOCITY IN X ‘(’ DECIMAL ‘)’
+   4. VELOCITY IN Y ‘(’ DECIMAL ‘)’

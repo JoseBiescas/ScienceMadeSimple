@@ -27,8 +27,8 @@ class Lexer(object):
         'average' : 'AVERAGE',
         'time' : 'TIME',
         'force' : 'FORCE',
-        'x' : 'X',
-        'y' : 'Y'
+        'xaxis' : 'XAXIS',
+        'yaxis' : 'YAXIS'
     }
     literals = [
         '+', '-', '/', '*', '^', '(', ')', '[',
@@ -75,9 +75,9 @@ class Lexer(object):
         r'false'
         t.value = False
         return t
-
-    def t_FLOAT(self, t): #Looks like placing Float rule over Int rule gives it a higher precedence
-        r'[+-]?([0-9]*[.])?[0-9]+'
+    
+    def t_FLOAT(self, t):
+        r'([0-9]*)?[.][0-9]+'
         t.value = float(t.value)
         return t
 
@@ -104,4 +104,4 @@ class Lexer(object):
 
 m = Lexer()
 m.build()
-#m.test() Uncomment to test lexer, must pass in a string
+#m.test() #Uncomment to test lexer, must pass in a string
