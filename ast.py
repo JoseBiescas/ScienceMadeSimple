@@ -1,6 +1,12 @@
 # import operator
-# from types import LambdaType
+from types import LambdaType
 
-# class EPERCENT():
+class EPERCENT():
+    pass
 
+class BINOP():
+    pass
+
+class EXPRESSION():
+    pass
 
