@@ -86,6 +86,11 @@ class Lexer(object):
         t.value = int(t.value)
         return t
 
+    def t_GRAVITY(self, t):
+        r'9.80665'
+        t.value = 9.80665
+        return t
+
     def t_error(self, t):
         print("Illegal character %s" % t.value[0])
         t.lexer.skip(1)

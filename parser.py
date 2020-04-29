@@ -1,4 +1,5 @@
 import ply.yacc as yacc
+import math
 
 from lexer import Lexer
 
@@ -14,8 +15,30 @@ class Parser():
         ('right', 'UMINUS'),
     )
 
+    def p_program(self, p):
+        '''program : expression'''
+
+        p[0] = p[1]
+
     def p_expression_binop(self, p):
         '''expression : expression BINOP expression'''
+        
+        if(p[2] == '+'):
+            p[0] = p[1] + p[3]
+        elif(p[2] == '-'):
+            p[0] = p[1] - p[3]
+        elif(p[2] == '*'):
+            p[0] = p[1] - p[3]
+        elif(p[2] == '/'):
+            p[0] = p[1] / p[3]
+        elif(p[2] == '>'):
+            p[0] = p[1] > p[3]
+        elif(p[2] == '<'):
+            p[0] = p[1] < p[3]
+        elif(p[2] == '>='):
+            p[0] = p[1] >= p[3]
+        elif(p[2] == '<='):
+            p[0] = p[1] <= p[3]
 
     def p_expression_par(self, p):
         '''expression : '(' expression ')' '''
@@ -39,6 +62,7 @@ class Parser():
              | BOOLEAN
              | ID
              | '-' NUMBER %prec UMINUS
+             | sciences
              '''
 
     def p_IDList(self, p):
@@ -72,27 +96,22 @@ class Parser():
               | '|'
               '''
 
+        p[0] = p[1]
+
     def p_BOOLEAN(self, p):
         '''
         BOOLEAN : TRUE
                 | FALSE
                 '''
 
+        p[0] = p[1]
+
     def p_NUMBER(self, p):
         '''
         NUMBER : FLOAT
                | INT
                '''
-
-    # def p_FLOATN(self,p):
-    #     '''
-    #     FLOATN : FLOAT
-    #     '''
-
-    # def p_INTEGER(self,p):
-    #     '''
-    #     INTEGER : INT
-    #     '''
+        p[0] = p[1]
 
     # EPERCENT PARAMETERS: approximate value, exact value
     # FORMULA = (|aprox - exact|/exact) * 100
@@ -104,47 +123,81 @@ class Parser():
                  | EPERCENT '(' NUMBER ',' NUMBER ')'
         '''
 
-    # PHYSICS:
-    # POSITION PARAMETERS: acceleration, time, initial velocity and initial position
-    # FORMULA = 0.5 * a * t^2 + v0*t + initial position
+        if(p[1] == 'epercent'):
+            p[0] = (abs(p[3]- p[5])/p[5]) * 100
+        else:
+            p[0] = p[1]
 
-    # INITIAL VELOCITY PARAMETERS: final velocity, acceleration, displacement
-    # FORMULA: sqrt(vF^2 - 2*a*displacement)
-
-    # FINAL VELOCITY:  initial velocity, acceleration, (displacement or time), boolean
-    # FORMULA 1: sqrt(v0^2 + 2*a*displacement), if boolean is true
-    # FORMULA 2: v0 + a*t, if boolean is false
-
-    # AVERAGE VELOCITY PARAMETERS: initial position, final position, time
-    # FORMULA = (xF - x0)/t
-
-    # VELOCITY IN X PARAMETERS: the overall velocity
-    # FORMULA: v*cos(theta)
-
-    # VELOCITY IN Y PARAMETERS: the overall velocity
-    # FORMULA: v*sin(theta)
-
-    # ACCELERATION PARAMETERS: initial velocity, final velocity, time
-    # FORMULA: (vF - v0)/t
-
-    # POTENTIAL ENERGY PARAMETERS: mass, vertical height
-    # FORMULA: m * G * h
-
-    # KINETIC ENERGY PARAMETERS: mass, velocity
-    # FORMULA: 0.5 * m * v^2
-    # #
     def p_PHYSICS(self, p):
         '''
         physics : POSITION '(' NUMBER ',' NUMBER ',' NUMBER ',' NUMBER ')'
                 | INITIAL VELOCITY '(' NUMBER ',' NUMBER ',' NUMBER ')'
                 | FINAL VELOCITY '(' NUMBER ',' NUMBER ',' NUMBER ',' BOOLEAN ')'
                 | AVERAGE VELOCITY '(' NUMBER ',' NUMBER ',' NUMBER ')'
-                | VELOCITY IN XAXIS '(' NUMBER ')'
-                | VELOCITY IN YAXIS '(' NUMBER ')'
+                | VELOCITY IN XAXIS '(' NUMBER ',' NUMBER ')'
+                | VELOCITY IN YAXIS '(' NUMBER ',' NUMBER ')'
                 | ACCELERATION '(' NUMBER ',' NUMBER ',' NUMBER ')'
                 | POTENTIAL ENERGY '(' NUMBER ',' NUMBER ')'
                 | KINETIC ENERGY '(' NUMBER ',' NUMBER ')'
         '''
+
+    # POSITION PARAMETERS: acceleration, time, initial velocity and initial position
+    # FORMULA = 0.5 * a * t^2 + v0*t + initial position
+
+        if (p[1] == 'position'):
+            p[0] =  0.5 * p[3] * p[5]**2 + p[7]*p[5] + p[9]
+
+    # INITIAL VELOCITY PARAMETERS: final velocity, acceleration, displacement
+    # FORMULA: sqrt(vF^2 - 2*a*displacement)
+
+        elif (p[1] == 'initial' and p[2] == 'velocity'):
+            p[0] = math.sqrt(p[4]**2 - 2 *  p[6] * p[8])
+
+    # FINAL VELOCITY:  initial velocity, acceleration, (displacement or time), boolean
+    # FORMULA 1: sqrt(v0^2 + 2*a*displacement), if boolean is true
+    # FORMULA 2: v0 + a*t, if boolean is false
+
+        elif (p[1] == 'final' and p[2] == 'velocity'):
+            if(p[10]==True):
+                p[0] = math.sqrt(p[4]**2 + 2 *  p[6] * p[8])
+            else:
+                p[0] = p[4] + p[6] * p[8]
+
+    # AVERAGE VELOCITY PARAMETERS: initial position, final position, time
+    # FORMULA = (xF - x0)/t
+        
+        elif (p[1] == 'average' and p[2] == 'velocity'):
+            p[0] = (p[4]-p[6])/p[8]
+
+    # VELOCITY IN X PARAMETERS: the overall velocity
+    # FORMULA: v*cos(theta)
+
+        elif (p[1]=='velocity' and p[2] == 'in' and p[3] == 'xaxis'):
+            p[0] == p[5] * math.cos(p[7])
+
+    # VELOCITY IN Y PARAMETERS: the overall velocity
+    # FORMULA: v*sin(theta)
+
+        elif (p[1]=='velocity' and p[2] == 'in' and p[3] == 'yaxis'):
+            p[0] == p[5] * math.sin(p[7])
+
+    # ACCELERATION PARAMETERS: initial velocity, final velocity, time
+    # FORMULA: (vF - v0)/t
+
+        elif (p[1] == 'acceleration'):
+            p[0] = (p[3]-p[5])/p[7]
+
+    # POTENTIAL ENERGY PARAMETERS: mass, vertical height
+    # FORMULA: m * G * h
+
+        elif (p[1]=='potential' and p[2] == 'energy'):
+            p[0] == p[4] * 9.80665 * p[6]
+
+    # KINETIC ENERGY PARAMETERS: mass, velocity
+    # FORMULA: 0.5 * m * v^2
+
+        elif (p[1]=='kinetic' and p[2] == 'energy'):
+            p[0] == 0.5 * p[4] * p[6]
 
     def p_CHEMISTRY(self, p):
         '''
@@ -183,7 +236,7 @@ class Parser():
                 break
             if not s:
                 continue
-            self.parser.parse(s, debug=True)
+            self.parser.parse(s)
             print("Parse finished.")
 
 
