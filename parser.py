@@ -4,6 +4,8 @@ import math
 
 from lexer import Lexer
 
+IDS = {}
+IDList = {}
 
 class Parser():
     m = Lexer()
@@ -34,17 +36,23 @@ class Parser():
         '''expression : '-' expression %prec UMINUS'''
         p[0] = ast.UNARY(p[1], p[2])
 
-    # def p_expression_par(self, p):
-    #     '''expression : '(' expression ')' '''
+    def p_expression_par(self, p):
+        '''expression : '(' expression ')' '''
+        p[0] = p[2]
 
-    # def p_expression_assign(self, p):
-    #     '''expression : identifier '=' expression'''
+    def p_expression_assign(self, p):
+        '''expression : identifier '=' expression'''
+        IDS[p[1]] = p[3]
 
     # def p_expression_for_loop(self, p):
     #     '''expression : FOR IDList AT List'''
 
-    # def p_expression_ques(self, p):
-    #     '''expression : expression ',' expression '?' expression'''
+    def p_expression_ques(self, p):
+        '''expression : expression ',' expression '?' expression'''
+        if p[5]:
+            p[0] = p[1]
+        else:
+            p[0] = p[3]
 
     def p_expression(self, p):
         '''expression : TERM'''
@@ -55,22 +63,24 @@ class Parser():
         TERM : NUMBER
              | empty
              | BOOLEAN
-             | ID
+             | identifier
              | sciences
              '''
-        if(len(p) == 2):
-            p[0] = p[1]
+        p[0] = p[1]
 
     def p_IDList(self, p):
         '''
         IDList : identifier
                | identifier ',' IDList
         '''
+        IDList[p[1]] = 0
+
 
     def p_IDENTIFIER(self, p):
         '''
         identifier : ID
         '''
+        p[0] = IDS.get(p[1], p[1])
 
     def p_empty(self, p):
         'empty :'
