@@ -10,14 +10,20 @@ class Lexer(object):
         'stop' : 'STOP',
         'next' : 'NEXT',
         'in' : 'IN',
-
+        #physics
         'position' : 'POSITION', 
         'kinetic' : 'KINETIC', 
         'potential' : 'POTENTIAL', 
         'energy' : 'ENERGY', 
         'velocity' : 'VELOCITY', 
         'acceleration' : 'ACCELERATION', 
-        'impulse' : 'IMPULSE', 
+        'impulse' : 'IMPULSE',
+        #chemistry
+        'broglie': 'BROGLIE', 
+        'coulomb': 'COULOMB',
+        'heatTransfer' : 'HEATTRANSFER',
+        'bfp' : 'BFP',
+
         'epercent' : 'EPERCENT', 
         'gravity' : 'GRAVITY', 
         'planck' : 'PLANCK', 
