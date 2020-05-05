@@ -53,7 +53,7 @@ class Parser():
         p[0] = p[2]
 
     def p_expression_assign(self, p):
-        '''expression : identifier '=' expression'''
+        '''expression : ID '=' expression'''
         p[0] = ast.MAIN([p[1], p[2], p[3]])
         IDS[p[1]] = p[3]
 
