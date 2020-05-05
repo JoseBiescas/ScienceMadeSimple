@@ -28,7 +28,9 @@ class Lexer(object):
         'time' : 'TIME',
         'force' : 'FORCE',
         'xaxis' : 'XAXIS',
-        'yaxis' : 'YAXIS'
+        'yaxis' : 'YAXIS',
+        'integral' : 'INTEGRAL',
+        'derivative' : 'DERIVATIVE'
     }
     literals = [
         '+', '-', '/', '*', '^', '(', ')', '[',
@@ -48,6 +50,9 @@ class Lexer(object):
 
         #Booleans
         'TRUE', 'FALSE',
+
+        #String
+        'STRING'
     ]
 
     #RULES
@@ -84,6 +89,11 @@ class Lexer(object):
     def t_INT(self, t):
         r'\d+'
         t.value = int(t.value)
+        return t
+
+    def t_STRING(self, t):
+        r'\"([^\\\n]|(\\.))*?\"'
+        t.value = str(t.value[1:len(t.value) - 1])
         return t
 
     def t_GRAVITY(self, t):

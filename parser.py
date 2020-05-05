@@ -3,6 +3,7 @@ import astMatlab as ast
 import math
 
 from lexer import Lexer
+from Polynomial import Polynomial
 
 IDS = {}
 IDList = {}
@@ -126,6 +127,7 @@ class Parser():
         '''
         sciences : physics
                  | chemistry
+                 | math
                  | EPERCENT '(' NUMBER ',' NUMBER ')'
         '''
 
@@ -210,6 +212,20 @@ class Parser():
         chemistry : 
         '''
 
+    def p_MATH(self, p):
+        '''
+        math : INTEGRAL '(' STRING ')'
+             | DERIVATIVE '(' STRING ')'
+        '''
+
+        if(p[1] == 'integral'):
+            p[0] = Polynomial(p[3]).indefiniteIntegral()
+
+        if(p[1] == 'derivative'):
+            p[0] = Polynomial(p[3]).derivative()
+
+        print(p[0])
+
     def p_error(self, p):
         print("Syntax error in input!")
 
@@ -242,7 +258,7 @@ class Parser():
                 break
             if not s:
                 continue
-            self.parser.parse(s, debug=True)
+            self.parser.parse(s, debug=False)
             print("Parse finished.")
 
 
