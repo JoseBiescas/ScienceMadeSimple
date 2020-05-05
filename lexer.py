@@ -55,6 +55,7 @@ class Lexer(object):
     t_GTOE = r'>='
     t_NOTEQ = r'!='
     t_ignore = ' \t'
+    
 
     def t_newline(self, t):
         r'\n+'

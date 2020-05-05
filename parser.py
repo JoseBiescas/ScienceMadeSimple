@@ -20,8 +20,9 @@ class Parser():
     )
 
     def p_program(self, p):
-        '''program : expression'''
-        p[0] = ast.MAIN([p[1]])
+        '''program : expression
+                   | expression program'''
+        p[0] = ast.MAIN([p[1]]).evaluate()
 
     # Done this way so there is precedence clearly stated
     def p_expression_binop(self, p):
@@ -30,11 +31,21 @@ class Parser():
             | expression '*' expression %prec '*'
             | expression '/' expression %prec '/'
             | expression '^' expression %prec '^' '''
-        p[0] = ast.BINOP(p[2], p[1], p[3])
+        p[0] = ast.BINOP(p[2], p[1], p[3]).evaluate()
+    
+    def p_expression_boolean(self,p): 
+        '''expression : expression '|' expression
+                      | expression LTOE expression
+                      | expression GTOE expression
+                      | expression '>' expression
+                      | expression '<' expression
+                      | expression '&' expression
+                      | expression NOTEQ expression'''
+        p[0] = ast.BOOL(p[2], p[1], p[3]).evaluate()
 
     def p_expression_unary(self, p):
         '''expression : '-' expression %prec UMINUS'''
-        p[0] = ast.UNARY(p[1], p[2])
+        p[0] = ast.UNARY(p[1], p[2]).evaluate()
 
     def p_expression_par(self, p):
         '''expression : '(' expression ')' '''
@@ -42,6 +53,7 @@ class Parser():
 
     def p_expression_assign(self, p):
         '''expression : identifier '=' expression'''
+        p[0] = ast.MAIN([p[1], p[2], p[3]])
         IDS[p[1]] = p[3]
 
     # def p_expression_for_loop(self, p):
@@ -75,7 +87,6 @@ class Parser():
         '''
         IDList[p[1]] = 0
 
-
     def p_IDENTIFIER(self, p):
         '''
         identifier : ID
@@ -86,23 +97,23 @@ class Parser():
         'empty :'
         pass
 
-    def p_BINOP(self, p):
-        '''
-        BINOP : '+'
-              | '-'
-              | '*'
-              | '/'
-              | '='
-              | NOTEQ
-              | '<'
-              | '>'
-              | LTOE
-              | GTOE
-              | '&'
-              | '|'
-              '''
+    # def p_BINOP(self, p):
+    #     '''
+    #     BINOP : '+'
+    #           | '-'
+    #           | '*'
+    #           | '/'
+    #           | '='
+    #           | NOTEQ
+    #           | '<'
+    #           | '>'
+    #           | LTOE
+    #           | GTOE
+    #           | '&'
+    #           | '|'
+    #           '''
 
-        p[0] = p[1]
+    #     p[0] = p[1]
 
     def p_BOOLEAN(self, p):
         '''
@@ -156,7 +167,7 @@ class Parser():
     # INITIAL VELOCITY PARAMETERS: final velocity, acceleration, displacement
     # FORMULA: sqrt(vF^2 - 2*a*displacement)
 
-        elif (p[1] == 'initial' and p[2] == 'velocity'):
+        elif (p[1] == 'initial' and p[2] == 'velocity'):               
             p[0] = math.sqrt(p[4]**2 - 2 * p[6] * p[8])
 
     # FINAL VELOCITY:  initial velocity, acceleration, (displacement or time), boolean
@@ -220,7 +231,7 @@ class Parser():
     def test_doc(self):
         while True:
             try:
-                f = open("Test", "r")
+                f = open("testfile", "r")
                 doc = ''
             except EOFError:
                 break
@@ -249,4 +260,4 @@ class Parser():
 p = Parser()
 p.build()
 p.test_str()  # Uncomment for quick testing
-# p.test_doc() <- uncomment for testing
+# p.test_doc() # <- uncomment for testing
