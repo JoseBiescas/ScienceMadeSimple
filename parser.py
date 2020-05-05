@@ -6,6 +6,7 @@ from lexer import Lexer
 
 IDS = {}
 IDList = {}
+planck = 6.62607004 * (10**-34)
 
 class Parser():
     m = Lexer()
@@ -207,8 +208,34 @@ class Parser():
 
     def p_CHEMISTRY(self, p):
         '''
-        chemistry : 
+        chemistry : BROGLIE '(' NUMBER ',' NUMBER ')'
+                  | COULOMB '(' NUMBER ',' NUMBER ',' NUMBER ',' NUMBER ')'
+                  | HEATTRANSFER '(' NUMBER ',' NUMBER ',' NUMBER ')'
+                  | BFP '(' NUMBER ',' NUMBER ',' NUMBER ')'
         '''
+        #de Broglie Parameters: planck's constant, mass, velocity
+        #FORMULA : planck / (m*v)
+        if p[1] == "broglie":
+            p[0] = planck / (p[3] *p[5])
+
+        #COULOMBS LAW PARAMETERS: charge1, charge2, distance, coulombs law constant
+        # (depends on the medium where the charges are found)
+        #FORMULA : F = (coulombs law constant * charge1 * charge2) / distance
+        if p[1] == 'coulomb':
+            p[0] = (p[3] * p[5] * p[9]) / p[7]
+        
+        # HEAT TRANSFER PARAMETERS: mass, specific heat, change in temperature
+        #FORMULA: q = mass * specific heat * change in temperature
+        if p[1] == 'heatTransfer':
+            p[0] = p[3] *p[5] *p[7]
+
+        #BOILING POINT ELEVATION PARAMETERS: Molal boiling point constant, molality, Van't Hoff factor
+        #or FREEZING POINT DEPRESSION PARAMETERS: Molal freezing point constant, molality, Van't Hoff factor
+        #FORMULA : molal(freezing or boiling point) * molality * van't hoff factor
+        if p[1] == 'bfp':
+            p[0] = p[3] * p[5] * p[7]
+
+        
 
     def p_error(self, p):
         print("Syntax error in input!")
@@ -249,4 +276,4 @@ class Parser():
 p = Parser()
 p.build()
 p.test_str()  # Uncomment for quick testing
-# p.test_doc() <- uncomment for testing
+p.test_doc() #<- uncomment for testing
