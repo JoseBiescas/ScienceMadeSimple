@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 import astMatlab as ast
+import itertools
 import math
 
 from lexer import Lexer
@@ -66,8 +67,34 @@ class Parser():
              | BOOLEAN
              | identifier
              | sciences
+             | list
              '''
         p[0] = p[1]
+
+    def p_list(self, p):
+        '''
+        list : '[' NUMBERList ']'
+             | '[' IDList ']'
+        '''
+
+        p[0] = p[2]
+
+    def p_NUMBERList(self, p):
+        '''
+        NUMBERList : NUMBER ',' NUMBERList
+                   | NUMBER
+        '''
+
+        p[0] = list()
+
+        self.removeNestings(p, p[0])
+
+    def removeNestings(self, l, o): 
+        for i in l: 
+            if type(i) == list: 
+                self.removeNestings(i, o) 
+            elif type(i) == int: 
+                o.append(i) 
 
     def p_IDList(self, p):
         '''
@@ -216,6 +243,8 @@ class Parser():
         '''
         math : INTEGRAL '(' STRING ')'
              | DERIVATIVE '(' STRING ')'
+             | DOT_PRODUCT '(' list ',' list ')'
+             | CROSS_PRODUCT '(' list ',' list ')'
         '''
 
         if(p[1] == 'integral'):
@@ -223,6 +252,18 @@ class Parser():
 
         if(p[1] == 'derivative'):
             p[0] = Polynomial(p[3]).derivative()
+        
+        if(p[1] == 'dot_product' and len(p[3]) == len(p[5]) and len(p[5])==3):
+            p[0] = 0
+            for i in range (0, len(p[5])):
+                p[0] += p[3][i] * p[5][i]
+
+        if(p[1] == 'cross_product' and len(p[3]) == len(p[5]) and len(p[5])==3):
+            p[0] = list()
+
+            p[0].append(p[3][1] * p[5][2] - p[3][2] * p[5][1])
+            p[0].append(p[3][2] * p[5][0] - p[3][0] * p[5][2])
+            p[0].append(p[3][0] * p[5][1] - p[3][1] * p[5][0])
 
         print(p[0])
 

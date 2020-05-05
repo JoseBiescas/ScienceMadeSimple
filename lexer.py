@@ -30,7 +30,9 @@ class Lexer(object):
         'xaxis' : 'XAXIS',
         'yaxis' : 'YAXIS',
         'integral' : 'INTEGRAL',
-        'derivative' : 'DERIVATIVE'
+        'derivative' : 'DERIVATIVE',
+        'dot_product' : 'DOT_PRODUCT',
+        'cross_product' : 'CROSS_PRODUCT'
     }
     literals = [
         '+', '-', '/', '*', '^', '(', ')', '[',
@@ -67,7 +69,7 @@ class Lexer(object):
         pass
 
     def t_ID(self, t):
-        r'[a-zA-Z][a-zA-Z0-9]*'
+        r'[a-zA-Z][a-zA-Z0-9_]*'
         t.type = self.keywords.get(t.value, t.type)
         return t
 
