@@ -8,7 +8,6 @@ from Polynomial import Polynomial
 
 IDS = {}
 IDList = {}
-FuncList = {}
 
 GRAVITY = 9.80665
 PLANCK = 6.62607004 * (10**-34)
@@ -30,33 +29,8 @@ class Parser():
     def p_program(self, p):
         '''program : expression
                    | expression program'''
-        
         p[0] = ast.MAIN([p[1]]).evaluate()
-        print(p[0])
-
-    # def p_define_func(self, p):
-    #     '''function_define : FUNC ID '(' IDList ')' '{' expression '}' '''
-    #     FuncList[p[2]] = [p[4], p[7]]
-    
-    # def p_call_func(self, p):
-    #     '''function_call : ID '(' parameter_list ')' '''
-    #     if p[2] in FuncList:
-    #         pass
-
-
-    def p_parameter_list(self, p):
-        '''parameter_list : parameter
-                          | parameter ',' parameter_list'''
-        p[0] = p[1]
-
-    def p_parameter(self, p):
-        '''parameter : ID
-                     | NUMBER
-                     | BOOLEAN
-                     | STRING
-                     | empty
-        '''
-        p[0] = p[1]
+        #print(p[0])
 
     # Done this way so there is precedence clearly stated
     def p_expression_binop(self, p):
@@ -74,8 +48,7 @@ class Parser():
                       | expression '>' expression
                       | expression '<' expression
                       | expression '&' expression
-                      | expression NOTEQ expression
-                      | expression EQEQ expression'''
+                      | expression NOTEQ expression'''
         p[0] = ast.BOOL(p[2], p[1], p[3]).evaluate()
 
     def p_expression_unary(self, p):
@@ -91,14 +64,8 @@ class Parser():
         p[0] = ast.MAIN([p[1], p[2], p[3]])
         IDS[p[1]] = p[3]
 
-    def p_expression_for_loop(self, p):
-        '''expression : FOR ID FROM INT TO INT ':' EXPList'''
-        lista = []
-        for p[2] in range(p[4], p[6]):
-            lista.append(p[8])
-
-        p[0] = list()    
-        self.removeNestings(lista, p[0])
+    # def p_expression_for_loop(self, p):
+    #     '''expression : FOR identifier FROM INT TO INT ':' expression'''
 
     # def p_expression_for_loop(self, p):
     #     '''expression : FOR identifier AT List'''
@@ -149,7 +116,7 @@ class Parser():
         for i in l: 
             if type(i) == list: 
                 self.removeNestings(i, o) 
-            elif type(i) == int or type(i) == str: 
+            elif type(i) == int: 
                 o.append(i) 
 
     def p_IDList(self, p):
@@ -176,8 +143,7 @@ class Parser():
         '''
         show : SHOW '(' expression ')'
         '''
-        # print(p[3])
-        p[0] = p[3]
+        print(p[3])
 
     def p_CONSTANTS(self, p):
         '''
@@ -415,7 +381,7 @@ class Parser():
     def test_doc(self):
         while True:
             try:
-                f = open("test", "r")
+                f = open("testfile", "r")
                 doc = ''
             except EOFError:
                 break
@@ -443,5 +409,5 @@ class Parser():
 
 p = Parser()
 p.build()
-# p.test_str()  # Uncomment for quick testing
-p.test_doc() # <- uncomment for testing
+p.test_str()  # Uncomment for quick testing
+# p.test_doc() # <- uncomment for testing
