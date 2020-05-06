@@ -13,6 +13,8 @@ class Lexer(object):
         'show' : 'SHOW',
         'from' : 'FROM',
         'to' : 'TO',
+        'func' : 'FUNC',
+
         #physics
         'position' : 'POSITION', 
         'kineticEnergy' : 'KINETICENERGY', 
@@ -24,9 +26,9 @@ class Lexer(object):
         'averageVelocity' : 'AVERAGEVELOCITY',
         'velocityX' : 'VELOCITYX',
         'velocityY' : 'VELOCITYY',
-        'position' : 'POSITION',
         'time' : 'TIME',
         'force' : 'FORCE',
+        
         #chemistry
         'broglie': 'BROGLIE', 
         'coulomb': 'COULOMB',
@@ -35,6 +37,7 @@ class Lexer(object):
         'epercent' : 'EPERCENT', 
         'gravity' : 'GRAVITY', 
         'planck' : 'PLANCK', 
+        
         #math
         'pi' : 'PI',
         'eulier' : 'EULIER',
@@ -56,7 +59,7 @@ class Lexer(object):
         'ID',
 
         #Operators (Can't be decalred in literals)
-        'LTOE', 'GTOE', 'NOTEQ',
+        'LTOE', 'GTOE', 'NOTEQ', 'EQEQ',
 
         #Digits
         'INT', 'FLOAT',
@@ -76,6 +79,7 @@ class Lexer(object):
     t_LTOE = r'<='
     t_GTOE = r'>='
     t_NOTEQ = r'!='
+    t_EQEQ = r'=='
     t_ignore = ' \t'
 
     def t_singleComment(self,t):

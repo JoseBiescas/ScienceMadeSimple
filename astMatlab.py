@@ -37,7 +37,7 @@ class BINOP(BaseExpression):
         '*': operator.mul,
         '/': operator.truediv,
         # '%': operator.mod,
-        '^': operator.pow
+        '^': operator.pow,
     }
     def __init__(self, operation, num1, num2):
         self.operation = operation
@@ -63,6 +63,7 @@ class BOOL(BaseExpression):
         '&': operator.and_,
         '|': operator.or_,
         '!=': operator.ne,
+        '==': operator.eq
     }
 
     def __init__(self, operation, num1, num2):
