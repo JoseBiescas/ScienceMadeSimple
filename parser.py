@@ -8,7 +8,11 @@ from Polynomial import Polynomial
 
 IDS = {}
 IDList = {}
-planck = 6.62607004 * (10**-34)
+
+GRAVITY = 9.80665
+PLANCK = 6.62607004 * (10**-34)
+PI = 3.141592653589793
+EULIER = 2.718281828459045235360
 
 class Parser():
     m = Lexer()
@@ -59,8 +63,12 @@ class Parser():
         p[0] = ast.MAIN([p[1], p[2], p[3]])
         IDS[p[1]] = p[3]
 
-    # def p_expression_for_loop(self, p):
-    #     '''expression : FOR identifier AT List'''
+    def p_expression_for_loop(self, p):
+        '''expression : FOR identifier FROM INT TO INT ':' expression'''
+
+        for x in range(p[4], p[6]):
+            x = p[8]
+            x
 
     def p_expression_ques(self, p):
         '''expression : expression ',' expression '?' expression'''
@@ -76,26 +84,28 @@ class Parser():
     def p_term(self, p):
         '''
         TERM : NUMBER
-             | empty
              | BOOLEAN
+             | STRING
+             | empty
              | identifier
              | sciences
              | list
+             | show
              '''
         p[0] = p[1]
 
     def p_list(self, p):
         '''
-        list : '[' NUMBERList ']'
+        list : '[' EXPList ']'
              | '[' IDList ']'
         '''
 
         p[0] = p[2]
 
-    def p_NUMBERList(self, p):
+    def p_expList(self, p):
         '''
-        NUMBERList : NUMBER ',' NUMBERList
-                   | NUMBER
+        EXPList : expression ',' EXPList
+                | expression
         '''
 
         p[0] = list()
@@ -114,7 +124,10 @@ class Parser():
         IDList : identifier
                | identifier ',' IDList
         '''
-        IDList[p[1]] = 0
+
+        p[0] = list()
+
+        self.removeNestings(p, p[0])
 
     def p_IDENTIFIER(self, p):
         '''
@@ -126,23 +139,28 @@ class Parser():
         'empty :'
         pass
 
-    # def p_BINOP(self, p):
-    #     '''
-    #     BINOP : '+'
-    #           | '-'
-    #           | '*'
-    #           | '/'
-    #           | '='
-    #           | NOTEQ
-    #           | '<'
-    #           | '>'
-    #           | LTOE
-    #           | GTOE
-    #           | '&'
-    #           | '|'
-    #           '''
+    def p_show(self, p):
+        '''
+        show : SHOW '(' expression ')'
+        '''
+        print(p[3])
 
-    #     p[0] = p[1]
+    def p_CONSTANTS(self, p):
+        '''
+        CONSTANT : GRAVITY
+                 | PLANCK
+                 | PI
+                 | EULIER
+        '''
+
+        if p[1] == 'gravity':
+            p[0] = GRAVITY
+        elif p[1] == 'planck':
+            p[0] = PLANCK
+        elif p[1] == 'pi':
+            p[0] = PI
+        elif p[1] == 'eulier':
+            p[0] = EULIER
 
     def p_BOOLEAN(self, p):
         '''
@@ -156,11 +174,9 @@ class Parser():
         '''
         NUMBER : FLOAT
                | INT
+               | CONSTANT
                '''
         p[0] = p[1]
-
-    # EPERCENT PARAMETERS: approximate value, exact value
-    # FORMULA = (|aprox - exact|/exact) * 100
 
     def p_SCIENCES(self, p):
         '''
@@ -170,6 +186,9 @@ class Parser():
                  | EPERCENT '(' NUMBER ',' NUMBER ')'
         '''
 
+        # EPERCENT PARAMETERS: approximate value, exact value
+        # FORMULA = (|aprox - exact|/exact) * 100
+
         if(p[1] == 'epercent'):
             p[0] = (abs(p[3] - p[5])/p[5]) * 100
         else:
@@ -177,15 +196,15 @@ class Parser():
 
     def p_PHYSICS(self, p):
         '''
-        physics : POSITION '(' NUMBER ',' NUMBER ',' NUMBER ',' NUMBER ')'
-                | INITIAL VELOCITY '(' NUMBER ',' NUMBER ',' NUMBER ')'
-                | FINAL VELOCITY '(' NUMBER ',' NUMBER ',' NUMBER ',' BOOLEAN ')'
-                | AVERAGE VELOCITY '(' NUMBER ',' NUMBER ',' NUMBER ')'
-                | VELOCITY IN XAXIS '(' NUMBER ',' NUMBER ')'
-                | VELOCITY IN YAXIS '(' NUMBER ',' NUMBER ')'
-                | ACCELERATION '(' NUMBER ',' NUMBER ',' NUMBER ')'
-                | POTENTIAL ENERGY '(' NUMBER ',' NUMBER ')'
-                | KINETIC ENERGY '(' NUMBER ',' NUMBER ')'
+        physics : POSITION '(' TERM ',' TERM ',' TERM ',' TERM ')'
+                | INITIALVELOCITY '(' TERM ',' TERM ',' TERM ')'
+                | FINALVELOCITY '(' TERM ',' TERM ',' TERM ',' TERM ')'
+                | AVERAGEVELOCITY '(' TERM ',' TERM ',' TERM ')'
+                | VELOCITYX '(' TERM ',' TERM ')'
+                | VELOCITYY '(' TERM ',' TERM ')'
+                | ACCELERATION '(' TERM ',' TERM ',' TERM ')'
+                | POTENTIALENERGY '(' TERM ',' TERM ')'
+                | KINETICENERGY '(' TERM ',' TERM ')'
         '''
 
     # POSITION PARAMETERS: acceleration, time, initial velocity and initial position
@@ -197,36 +216,36 @@ class Parser():
     # INITIAL VELOCITY PARAMETERS: final velocity, acceleration, displacement
     # FORMULA: sqrt(vF^2 - 2*a*displacement)
 
-        elif (p[1] == 'initial' and p[2] == 'velocity'):               
-            p[0] = math.sqrt(p[4]**2 - 2 * p[6] * p[8])
+        elif (p[1] == 'initialVelocity'):               
+            p[0] = math.sqrt(p[3]**2 - 2 * p[5] * p[7])
 
     # FINAL VELOCITY:  initial velocity, acceleration, (displacement or time), boolean
     # FORMULA 1: sqrt(v0^2 + 2*a*displacement), if boolean is true
     # FORMULA 2: v0 + a*t, if boolean is false
 
-        elif (p[1] == 'final' and p[2] == 'velocity'):
-            if(p[10] == True):
-                p[0] = math.sqrt(p[4]**2 + 2 * p[6] * p[8])
+        elif (p[1] == 'finalVelocity'):
+            if(p[9] == True):
+                p[0] = math.sqrt(p[3]**2 + 2 * p[5] * p[7])
             else:
-                p[0] = p[4] + p[6] * p[8]
+                p[0] = p[3] + p[5] * p[7]
 
     # AVERAGE VELOCITY PARAMETERS: initial position, final position, time
     # FORMULA = (xF - x0)/t
 
-        elif (p[1] == 'average' and p[2] == 'velocity'):
-            p[0] = (p[4]-p[6])/p[8]
+        elif (p[1] == 'averageVelocity'):
+            p[0] = (p[3]-p[5])/p[7]
 
     # VELOCITY IN X PARAMETERS: the overall velocity
     # FORMULA: v*cos(theta)
 
-        elif (p[1] == 'velocity' and p[2] == 'in' and p[3] == 'xaxis'):
-            p[0] == p[5] * math.cos(p[7])
+        elif (p[1] == 'velocityY'):
+            p[0] == p[3] * math.cos(p[5])
 
     # VELOCITY IN Y PARAMETERS: the overall velocity
     # FORMULA: v*sin(theta)
 
-        elif (p[1] == 'velocity' and p[2] == 'in' and p[3] == 'yaxis'):
-            p[0] == p[5] * math.sin(p[7])
+        elif (p[1] == 'velocityX'):
+            p[0] == p[3] * math.sin(p[5])
 
     # ACCELERATION PARAMETERS: initial velocity, final velocity, time
     # FORMULA: (vF - v0)/t
@@ -237,26 +256,26 @@ class Parser():
     # POTENTIAL ENERGY PARAMETERS: mass, vertical height
     # FORMULA: m * G * h
 
-        elif (p[1] == 'potential' and p[2] == 'energy'):
-            p[0] == p[4] * 9.80665 * p[6]
+        elif (p[1] == 'potentialEnergy'):
+            p[0] == p[3] * 9.80665 * p[5]
 
     # KINETIC ENERGY PARAMETERS: mass, velocity
     # FORMULA: 0.5 * m * v^2
 
-        elif (p[1] == 'kinetic' and p[2] == 'energy'):
-            p[0] == 0.5 * p[4] * p[6]
+        elif (p[1] == 'kineticEnergy'):
+            p[0] == 0.5 * p[3] * p[5]
 
     def p_CHEMISTRY(self, p):
         '''
-        chemistry : BROGLIE '(' NUMBER ',' NUMBER ')'
-                  | COULOMB '(' NUMBER ',' NUMBER ',' NUMBER ',' NUMBER ')'
-                  | HEATTRANSFER '(' NUMBER ',' NUMBER ',' NUMBER ')'
-                  | BFP '(' NUMBER ',' NUMBER ',' NUMBER ')'
+        chemistry : BROGLIE '(' TERM ',' TERM ')'
+                  | COULOMB '(' TERM ',' TERM ',' TERM ',' TERM ')'
+                  | HEATTRANSFER '(' TERM ',' TERM ',' TERM ')'
+                  | BFP '(' TERM ',' TERM ',' TERM ')'
         '''
         #de Broglie Parameters: planck's constant, mass, velocity
         #FORMULA : planck / (m*v)
         if p[1] == "broglie":
-            p[0] = planck / (p[3] *p[5])
+            p[0] = PLANCK / (p[3] *p[5])
 
         #COULOMBS LAW PARAMETERS: charge1, charge2, distance, coulombs law constant
         # (depends on the medium where the charges are found)
@@ -275,35 +294,82 @@ class Parser():
         if p[1] == 'bfp':
             p[0] = p[3] * p[5] * p[7]
 
-        
-
     def p_MATH(self, p):
         '''
-        math : INTEGRAL '(' STRING ')'
-             | DERIVATIVE '(' STRING ')'
-             | DOT_PRODUCT '(' list ',' list ')'
-             | CROSS_PRODUCT '(' list ',' list ')'
+        math : INTEGRALAPPROXIMATION '(' TERM ',' TERM ',' TERM  ',' TERM ')' 
+             | INTEGRAL '(' TERM ')'
+             | DERIVATIVE '(' TERM ')'
+             | DOTPRODUCT '(' TERM ',' TERM ')'
+             | CROSSPRODUCT '(' TERM ',' TERM ')'
+             | SUMMATION '(' TERM ',' TERM ',' TERM ')'
         '''
 
+        if(p[1] == 'integralApproximation'):
+            h = float(p[9]-p[7])/p[5]
+            result = 0
+            
+            if('^' in p[3]):
+                p[3] = p[3].replace('^', '**')
+
+            if('e' in p[3]):
+                p[3] = p[3].replace('e', '2.718281828459045')
+
+            if('pi' in p[3]):
+                p[3] = p[3].replace('pi', '3.141592653589793')
+
+            for i in range(p[5]):
+                f = p[3]
+
+                if 'cos(x)' in f:
+                    f = f.replace('cos(x)', str(math.cos((p[7] + h/2.0) + i*h)))
+                if 'sin(x)' in f:
+                    f = f.replace('sin(x)', str(math.sin((p[7] + h/2.0) + i*h)))
+
+                f = f.replace('x', str((p[7] + h/2.0) + i*h))
+
+                result += eval(f)
+            result *= h
+            p[0] = result
+
+        #PARAMETER: A string with the polynomial to integrate
         if(p[1] == 'integral'):
             p[0] = Polynomial(p[3]).indefiniteIntegral()
 
+        #PARAMETER: A string with the polynomial to derivate
         if(p[1] == 'derivative'):
             p[0] = Polynomial(p[3]).derivative()
         
-        if(p[1] == 'dot_product' and len(p[3]) == len(p[5]) and len(p[5])==3):
+        #Accepted parameters are two vectors with the same length
+        if(p[1] == 'dotProduct' and len(p[3]) == len(p[5]) and len(p[5])==3):
             p[0] = 0
             for i in range (0, len(p[5])):
                 p[0] += p[3][i] * p[5][i]
 
-        if(p[1] == 'cross_product' and len(p[3]) == len(p[5]) and len(p[5])==3):
+        #Accepted parameters are two vectors with the same length
+        if(p[1] == 'crossProduct' and len(p[3]) == len(p[5]) and len(p[5])==3):
             p[0] = list()
 
             p[0].append(p[3][1] * p[5][2] - p[3][2] * p[5][1])
             p[0].append(p[3][2] * p[5][0] - p[3][0] * p[5][2])
             p[0].append(p[3][0] * p[5][1] - p[3][1] * p[5][0])
 
-        print(p[0])
+        #PARAMATERS: A string with the equation and two numbers with the ranges of the summation
+        if(p[1] == 'summation'):
+            sum = 0
+            if('^' in p[3]):
+                p[3] = p[3].replace('^', '**')
+
+            for n in range (p[5],p[7] + 1):
+                f = p[3].replace('x', str(n))
+
+                if 'cos(x)' in f:
+                    f = f.replace('cos(x)', str(math.cos((p[7] + h/2.0) + i*h)))
+                if 'sin(x)' in f:
+                    f = f.replace('sin(x)', str(math.sin((p[7] + h/2.0) + i*h)))
+
+                sum += eval(f)
+
+            p[0] = sum
 
     def p_error(self, p):
         print("Syntax error in input!")

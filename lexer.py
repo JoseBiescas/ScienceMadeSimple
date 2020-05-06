@@ -10,39 +10,44 @@ class Lexer(object):
         'stop' : 'STOP',
         'next' : 'NEXT',
         'in' : 'IN',
+        'show' : 'SHOW',
+        'from' : 'FROM',
+        'to' : 'TO',
         #physics
         'position' : 'POSITION', 
-        'kinetic' : 'KINETIC', 
-        'potential' : 'POTENTIAL', 
-        'energy' : 'ENERGY', 
-        'velocity' : 'VELOCITY', 
+        'kineticEnergy' : 'KINETICENERGY', 
+        'potentialEnergy' : 'POTENTIALENERGY',  
         'acceleration' : 'ACCELERATION', 
         'impulse' : 'IMPULSE',
+        'initialVelocity' : 'INITIALVELOCITY',
+        'finalVelocity' : 'FINALVELOCITY',
+        'averageVelocity' : 'AVERAGEVELOCITY',
+        'velocityX' : 'VELOCITYX',
+        'velocityY' : 'VELOCITYY',
+        'position' : 'POSITION',
+        'time' : 'TIME',
+        'force' : 'FORCE',
         #chemistry
         'broglie': 'BROGLIE', 
         'coulomb': 'COULOMB',
         'heatTransfer' : 'HEATTRANSFER',
         'bfp' : 'BFP',
-
         'epercent' : 'EPERCENT', 
         'gravity' : 'GRAVITY', 
         'planck' : 'PLANCK', 
+        #math
         'pi' : 'PI',
-        'initial' : 'INITIAL',
-        'final' : 'FINAL',
-        'average' : 'AVERAGE',
-        'time' : 'TIME',
-        'force' : 'FORCE',
-        'xaxis' : 'XAXIS',
-        'yaxis' : 'YAXIS',
+        'eulier' : 'EULIER',
+        'integralApproximation' : 'INTEGRALAPPROXIMATION',
         'integral' : 'INTEGRAL',
         'derivative' : 'DERIVATIVE',
-        'dot_product' : 'DOT_PRODUCT',
-        'cross_product' : 'CROSS_PRODUCT'
+        'dotProduct' : 'DOTPRODUCT',
+        'crossProduct' : 'CROSSPRODUCT',
+        'summation' :  'SUMMATION'
     }
     literals = [
         '+', '-', '/', '*', '^', '(', ')', '[',
-     ']', '{', '}', '|', '&', '?', '=', '<', '>', ','
+     ']', '{', '}', '|', '&', '?', '=', '<', '>', ',', ':'
      ]
 
     tokens = list(keywords.values()) + [
@@ -103,11 +108,6 @@ class Lexer(object):
     def t_STRING(self, t):
         r'\"([^\\\n]|(\\.))*?\"'
         t.value = str(t.value[1:len(t.value) - 1])
-        return t
-
-    def t_GRAVITY(self, t):
-        r'9.80665'
-        t.value = 9.80665
         return t
 
     def t_error(self, t):
