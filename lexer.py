@@ -68,12 +68,32 @@ class Lexer(object):
         'STRING'
     ]
 
+    states = (
+        ('comment', 'exclusive'),
+    )
+
     #RULES
     t_LTOE = r'<='
     t_GTOE = r'>='
     t_NOTEQ = r'!='
     t_ignore = ' \t'
+
+    def t_singleComment(self,t):
+        r'\#+.*'
+        pass
     
+    def t_startComment(self,t):
+        r'/\#'
+        t.lexer.begin('comment')
+    
+    def t_comment_end(self,t):
+        r'\#/'
+        t.lexer.begin('INITIAL')
+    
+    t_comment_ignore= " \t\n"
+
+    def t_comment_error(self, t):
+     t.lexer.skip(1)
 
     def t_newline(self, t):
         r'\n+'
@@ -128,4 +148,5 @@ class Lexer(object):
 
 m = Lexer()
 m.build()
-#m.test() #Uncomment to test lexer, must pass in a string
+
+#m.test()#Uncomment to test lexer, must pass in a string

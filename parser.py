@@ -30,6 +30,7 @@ class Parser():
         '''program : expression
                    | expression program'''
         p[0] = ast.MAIN([p[1]]).evaluate()
+        print(p[0])
 
     # Done this way so there is precedence clearly stated
     def p_expression_binop(self, p):
@@ -70,6 +71,9 @@ class Parser():
             x = p[8]
             x
 
+    # def p_expression_for_loop(self, p):
+    #     '''expression : FOR identifier AT List'''
+        
     def p_expression_ques(self, p):
         '''expression : expression ',' expression '?' expression'''
         if p[5]:
