@@ -2,6 +2,7 @@ import ply.yacc as yacc
 import astMatlab as ast
 import itertools
 import math
+import sys
 
 from lexer import Lexer
 from Polynomial import Polynomial
@@ -378,10 +379,10 @@ class Parser():
         self.parser = yacc.yacc(module=self, **kwargs)
         print("Built succesfully")
 
-    def test_doc(self):
+    def test_doc(self, file):
         while True:
             try:
-                f = open("testfile", "r")
+                f = open(file, "r")
                 doc = ''
             except EOFError:
                 break
@@ -406,8 +407,20 @@ class Parser():
             self.parser.parse(s, debug=False)
             print("Parse finished.")
 
+if __name__ == '__main__':
+    if(len(sys.argv) > 2):
+        print("Too many arguments were passed, only pass the text to be parsed")
+        sys.exit(1)
+    elif(len(sys.argv) == 2):
+        p = Parser()
+        p.build()
+        text_to_be_parsed = sys.argv[1]
+        p.test_doc(text_to_be_parsed)
+    elif(len(sys.argv) == 1):
+        p = Parser()
+        p.build()
+        p.test_str()
+    
 
-p = Parser()
-p.build()
-p.test_str()  # Uncomment for quick testing
+# p.test_str()  # Uncomment for quick testing
 # p.test_doc() # <- uncomment for testing
