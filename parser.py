@@ -206,6 +206,11 @@ class Parser():
                 | ACCELERATION '(' TERM ',' TERM ',' TERM ')'
                 | POTENTIALENERGY '(' TERM ',' TERM ')'
                 | KINETICENERGY '(' TERM ',' TERM ')'
+                | PARALLELRESISTOR '(' TERM ')'
+                | SERIESRESISTOR '(' TERM ')'
+                | FINDCURRENT '(' TERM ',' TERM ')'
+                | FINDVOLTAGE '(' TERM ',' TERM ')'
+                | FINDFORCE '(' TERM ',' TERM ')'
         '''
 
     # POSITION PARAMETERS: acceleration, time, initial velocity and initial position
@@ -265,6 +270,37 @@ class Parser():
 
         elif (p[1] == 'kineticEnergy'):
             p[0] == 0.5 * p[3] * p[5]
+
+    #PARALLEL RESISTOR PARAMETERS: list of resistors that are in parallel
+    #FORMULA: 1/Σ(1/Rn)
+
+        elif (p[1] == 'parallelResistor'):
+            denominator = 0
+            for e in p[3]:
+                denominator += 1/e
+            p[0] = 1/denominator 
+
+    #SERIES RESISTOR PARAMETERS: list of resistors that are in series
+    #FORMULA: Σ(Rn)
+
+        elif (p[1] == 'seriesResistor'):
+            result = 0
+            for e in p[3]:
+                result += e
+            p[0] = result
+
+    #FIND VOLTAGE AND FIND FORCE PARAMETERS: the current and the resistance/ the mass and the acceleration
+    #FORMULAS: I*R and mass*acceleration
+
+        elif (p[1] == 'findVoltage' or p[1] == 'findForce'):
+            p[0] = p[3] * p[5]
+
+    #FIND CURRENT AND FIND RESISTOR PARAMETERS: the voltage and the resistor/ the voltage and the current
+    #FORMULAS: V/I and V/R
+
+        elif (p[1] == 'findCurrent' or p[1] == 'findVoltage'):
+            p[0] = p[3] / p[5]
+
 
     def p_CHEMISTRY(self, p):
         '''
