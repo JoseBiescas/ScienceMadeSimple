@@ -20,7 +20,14 @@ Steps of how to use our programming language:
 1. Download SMS from our GitHub repository with the following [link](https://github.com/JoseBiescas/ScienceMadeSimple).
 2. Make sure to have Python 3 installed in your computer, pip (python package manager) comes included when downloading Python.
 3. Install PLY 3.11 python libraries/packages using pip.
-4. Run the parser.py file on an IDE or terminal/command prompt.
+4. To parse your own text file, enter the project folder and run in command line.
+```markdown 
+- python3 parser.py filename.txt
+```
+Else, to parse text line by line just run
+```markdown
+- python3 parser.py
+```
 5. Start using SMS!
 
 ## Keywords
