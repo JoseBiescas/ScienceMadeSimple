@@ -23,6 +23,49 @@ Steps of how to use our programming language:
 4. Run the parser.py file on an IDE or terminal/command prompt.
 5. Start using SMS!
 
+## Keywords
+- for
+- at
+- while
+- stop
+- next
+- in
+- show
+- from
+- to
+- func
+
+## Built-in Functions
+Math:
+ - Integral Approximation
+ - Integral
+ - Dot product
+ - Cross product
+ - Summation
+ 
+Physics:
+ - Position
+ - Initial velocity
+ - Final velocity
+ - Average velocity
+ - Velocity in x
+ - Velocity in y
+ - Acceleration
+ - Potential energy
+ - Kinetic energy
+ - Resistors in parallel
+ - Resistors in series
+ - Find Current
+ - Find Voltage
+ - Find Force
+ 
+Chemistry: 
+ - Broglie
+ - Coulomb
+ - Heat Transfer
+ - Boiling Freezing Point
+ 
+ 
 
 # Pagina es hasta aqui, el resto es a little tutorial de github.
 
