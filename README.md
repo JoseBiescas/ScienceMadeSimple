@@ -10,9 +10,9 @@ We are engineering students who attended many math and science classes. We want 
 
 ## [Link to Repository](https://github.com/JoseBiescas/ScienceMadeSimple)
 
-## [Link to video demo](*link to video demo*)
+## [Link to video demo](https://www.youtube.com/embed/4KnwjgZNNn0)
 
-## [Link to commercial](*link to commercial*)
+## [Link to commercial](https://www.youtube.com/embed/ucdphrV98QA)
 
 ## How to use our language
 Steps of how to use our programming language:
@@ -44,70 +44,31 @@ Else, to parse text line by line just run
 
 ## Built-in Functions
 Math:
- - Integral Approximation
- - Integral
- - Dot product
- - Cross product
- - Summation
+ - integralApproximation
+ - integral
+ - derivative
+ - dotProduct
+ - corssProduct
+ - summation
  
 Physics:
- - Position
- - Initial velocity
- - Final velocity
- - Average velocity
- - Velocity in x
- - Velocity in y
- - Acceleration
- - Potential energy
- - Kinetic energy
- - Resistors in parallel
- - Resistors in series
- - Find Current
- - Find Voltage
- - Find Force
+ - position
+ - initialVelocity
+ - finalVelocity
+ - averageVelocity
+ - velocityX
+ - velocityY
+ - acceleration
+ - potentialEnergy
+ - kineticEnergy
+ - parallelResistor
+ - seriesResistor
+ - findCurrent
+ - findVoltage
+ - findForce
  
 Chemistry: 
- - Broglie
- - Coulomb
- - Heat Transfer
- - Boiling Freezing Point
- 
- 
-
-# Pagina es hasta aqui, el resto es a little tutorial de github.
-
-You can use the [editor on GitHub](https://github.com/JoseBiescas/Basic-MATLAB-Style-for-Sciences/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/JoseBiescas/Basic-MATLAB-Style-for-Sciences/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+ - broglie
+ - coulomb
+ - heatTransfer
+ - bfp (Boiling Freeze Point
