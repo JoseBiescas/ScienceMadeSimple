@@ -10,9 +10,9 @@ We are engineering students who attended many math and science classes. We want 
 
 ## [Link to Repository](https://github.com/JoseBiescas/ScienceMadeSimple)
 
-## [Link to video demo](https://www.youtube.com/embed/4KnwjgZNNn0)
+## [Link to video demo](https://youtu.be/4KnwjgZNNn0)
 
-## [Link to commercial](https://www.youtube.com/embed/ucdphrV98QA)
+## [Link to commercial](https://youtube.com/watch?v=ucdphrV98QA)
 
 ## How to use our language
 Steps of how to use our programming language:
